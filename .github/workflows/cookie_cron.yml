@@ -26,11 +26,11 @@ jobs:
       - name: Run Fetch Cookie Script
         run: python fetch_cookie.py
         
-      # গিটহাবে সেভ করার কমান্ড (ফাইলটি সরাসরি গিটহাবেও আপডেট হবে)
+      # গিটহাবে সেভ করার কমান্ড (এরর ফিক্স করা হয়েছে)
       - name: Commit and Push Cookies
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
-          git add cookies.json
-          git commit -m "Update cookies.json (Auto)" || exit 0
+          git add .
+          git commit -m "Update cookies and data (Auto)" || exit 0
           git push
