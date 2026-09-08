@@ -4,8 +4,8 @@ import requests
 from playwright.async_api import async_playwright
 
 # আপনার টেলিগ্রাম বটের তথ্য
-BOT_TOKEN = "8762557414:AAGvIOLarRcWKKgZWgzbXPgJdhK8akKu8rg"
-CHAT_ID = "8714217646"
+BOT_TOKEN = "8450441691:AAHrKs10fFE8TsO_7Okrjj8pn9_acanOEnc"
+CHAT_ID = "-1004322570598"
 
 # উদাহরণ টার্গেট এবং API এন্ডপয়েন্ট (আপনার প্রয়োজন অনুযায়ী পরিবর্তন করে নিবেন)
 TARGET_URL = "https://shop.garena.my/?channel=202953" 
