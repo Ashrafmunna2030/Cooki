@@ -1,0 +1,105 @@
+{
+    "api_response": {},
+    "cookies": [
+        {
+            "name": "source",
+            "value": "pc",
+            "domain": "shop.garena.my",
+            "path": "/",
+            "expires": -1,
+            "httpOnly": false,
+            "secure": true,
+            "sameSite": "None"
+        },
+        {
+            "name": "region",
+            "value": "MY",
+            "domain": "shop.garena.my",
+            "path": "/",
+            "expires": 1820415876.88142,
+            "httpOnly": false,
+            "secure": true,
+            "sameSite": "None"
+        },
+        {
+            "name": "language",
+            "value": "en",
+            "domain": "shop.garena.my",
+            "path": "/",
+            "expires": 1820415876.881138,
+            "httpOnly": false,
+            "secure": true,
+            "sameSite": "None"
+        },
+        {
+            "name": "mspid2",
+            "value": "eda95063d08d4e0ac3745977d7a3264d",
+            "domain": "shop.garena.my",
+            "path": "/",
+            "expires": 1820415876.055618,
+            "httpOnly": false,
+            "secure": true,
+            "sameSite": "None"
+        },
+        {
+            "name": "_ga",
+            "value": "GA1.1.1795330371.1788879876",
+            "domain": ".garena.my",
+            "path": "/",
+            "expires": 1823439876.369034,
+            "httpOnly": false,
+            "secure": false,
+            "sameSite": "Lax"
+        },
+        {
+            "name": "datadome",
+            "value": "W5ICigWMqV~IaXB79VDXFrOYardPTb1Wtngf8GjOljq2L~9o7pJOE57iVnc2MhugjmLMyChDkCnQ8IDhdj6HYPsqED9~rLUwlpo59K8O5yfLPPvXtjsiT6VMO7Sar44U",
+            "domain": ".garena.my",
+            "path": "/",
+            "expires": 1820415876.669614,
+            "httpOnly": false,
+            "secure": true,
+            "sameSite": "Lax"
+        },
+        {
+            "name": "_fbp",
+            "value": "fb.1.1788879877484.689131526461057430",
+            "domain": ".garena.my",
+            "path": "/",
+            "expires": 1796655877,
+            "httpOnly": false,
+            "secure": false,
+            "sameSite": "Lax"
+        },
+        {
+            "name": "fr",
+            "value": "0D89YadeLvR105U3j..BqoCQF...1.0.BqoCQF.AWdbqGEjci0IJE8wt7nZDNnfTLI",
+            "domain": ".facebook.com",
+            "path": "/",
+            "expires": 1796655877.939612,
+            "httpOnly": true,
+            "secure": true,
+            "sameSite": "None"
+        },
+        {
+            "name": "_ga_9F1KGGRJHY",
+            "value": "GS2.1.s1788879876$o1$g0$t1788879879$j57$l0$h0",
+            "domain": ".garena.my",
+            "path": "/",
+            "expires": 1823439879.012392,
+            "httpOnly": false,
+            "secure": false,
+            "sameSite": "Lax"
+        },
+        {
+            "name": "__csrf__",
+            "value": "6WrwWei0aie6xnSkV2TA4tPLErN0BTEC",
+            "domain": "shop.garena.my",
+            "path": "/",
+            "expires": -1,
+            "httpOnly": false,
+            "secure": true,
+            "sameSite": "Lax"
+        }
+    ]
+}
