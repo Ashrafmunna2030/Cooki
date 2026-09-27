@@ -4,11 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       count:
-        description: 'Cookies per cycle (default 1)'
+        description: 'Cookies per cycle'
         required: false
         default: '1'
       cycle:
-        description: 'Cycle identifier'
+        description: 'Cycle ID'
         required: false
         default: '1'
 
@@ -38,13 +38,12 @@ jobs:
           playwright install chromium
           playwright install-deps chromium
 
-      - name: Run cookie worker
+      - name: Run fetch_cookie.py
         env:
           FIREBASE_URL: ${{ secrets.FIREBASE_URL }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
-          COOKIE_COUNT: ${{ github.event.inputs.count }}
-        run: python worker.py
+        run: python fetch_cookie.py
 
       - name: Chain next job
         if: always()
@@ -54,4 +53,4 @@ jobs:
             -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/${{ github.repository }}/actions/workflows/cookie_cron.yml/dispatches \
             -d '{"ref":"main","inputs":{"count":"1","cycle":"next"}}'
-          echo "✅ Chained next cookie_cron job"
+          echo "✅ Chained next job"
