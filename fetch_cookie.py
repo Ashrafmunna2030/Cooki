@@ -14,8 +14,8 @@ BOT_TOKEN = "8450441691:AAHrKs10fFE8TsO_7Okrjj8pn9_acanOEnc"
 CHAT_ID = "-1004322570598"
 
 # টার্গেট এবং API এন্ডপয়েন্ট
-TARGET_URL = "https://shop.garena.my/?channel=202953"
-API_ENDPOINT = "https://shop.garena.my/api/preflight"
+TARGET_URL = "https://sso.garena.com/"
+API_ENDPOINT = "https://sso.garena.com/"
 JSON_FILE = "cooxkie.json"
 
 
