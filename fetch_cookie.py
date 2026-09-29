@@ -4,19 +4,20 @@ import requests
 import os
 from playwright.async_api import async_playwright
 
-# আপনার User-Agent (UA) ভেরিয়েবল
-UA = ("Mozilla/5.0 (Linux; Android 16; V2446 Build/BP2A.250605.031.A3; wv) "
-      "AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 "
-      "Chrome/127.0.6533.144 Mobile Safari/537.36")
-
 # আপনার টেলিগ্রাম বটের তথ্য
 BOT_TOKEN = "8450441691:AAHrKs10fFE8TsO_7Okrjj8pn9_acanOEnc"
 CHAT_ID = "-1004322570598"
 
 # টার্গেট এবং API এন্ডপয়েন্ট
-TARGET_URL = "https://account.garena.com"
-API_ENDPOINT = "https://account.garena.com"
-JSON_FILE = "cooxkie.json"
+TARGET_URL = "https://shop.garena.my/?channel=202953"
+API_ENDPOINT = "https://shop.garena.my/api/preflight"
+
+# 🎯 যে cookie গুলো JSON এ চাই
+WANTED_KEYS = [
+    "source", "region", "language",
+    "mspid2", "_fbp", "fr", "_ga",
+    "datadome", "_ga_9F1KGGRJHY", "__csrf__"
+]
 
 
 def send_telegram_message(message):
@@ -36,15 +37,23 @@ def send_telegram_message(message):
         print(f"Telegram alert error: {e}")
 
 
-def format_simple_cookies(raw_cookies, current_id):
+def build_cookie_json(raw_cookies):
     """
-    শুধুমাত্র ID এবং কুকির Key:Value গুলো সেভ করবে।
+    Playwright cookies array → চাওয়া ফরম্যাটের clean dict
     """
-    result = {"id": current_id}
-    
-    # সব কুকি যুক্ত করা হচ্ছে
-    for c in raw_cookies:
-        result[c["name"]] = c["value"]
+    cookie_map = {c["name"]: c["value"] for c in raw_cookies}
+
+    result = {
+        "source": "pc",
+        "region": "MY",
+        "language": "en",
+    }
+
+    for key in WANTED_KEYS:
+        if key in ("source", "region", "language"):
+            continue
+        if key in cookie_map:
+            result[key] = cookie_map[key]
 
     return result
 
@@ -63,9 +72,8 @@ async def fetch_all_data():
                 ]
             )
 
-            # এখানে আপনার দেওয়া UA ভেরিয়েবলটি ব্যবহার করা হয়েছে
             context = await browser.new_context(
-                user_agent=UA
+                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
             )
 
             page = await context.new_page()
@@ -89,47 +97,26 @@ async def fetch_all_data():
             else:
                 print(f"⚠️ API Error: স্ট্যাটাস {api_response.status}")
 
-            print("সব কুকি এক্সট্র্যাক্ট করা হচ্ছে...")
+            print("কুকি এক্সট্র্যাক্ট করা হচ্ছে...")
             raw_cookies = await context.cookies()
 
-            # 🎯 সিরিয়াল আইডি (1, 2, 3...) বের করা
-            existing_data = []
-            next_id = 1
-            
-            if os.path.exists(JSON_FILE):
-                try:
-                    with open(JSON_FILE, "r", encoding="utf-8") as f:
-                        content = f.read().strip()
-                        if content:
-                            existing_data = json.loads(content)
-                            if isinstance(existing_data, list) and len(existing_data) > 0:
-                                next_id = existing_data[-1].get("id", 0) + 1
-                            elif isinstance(existing_data, dict):
-                                next_id = existing_data.get("id", 0) + 1
-                                existing_data = [existing_data] 
-                except json.JSONDecodeError:
-                    print("পুরানো JSON ফাইলে সমস্যা, নতুন করে তৈরি করা হচ্ছে...")
-                    existing_data = []
+            # 🎯 clean JSON বানানো
+            cookie_json = build_cookie_json(raw_cookies)
+            json_text = json.dumps(cookie_json, indent=2, ensure_ascii=False)
 
-            # 🎯 সিম্পল JSON বানানো
-            new_cookie_entry = format_simple_cookies(raw_cookies, next_id)
-            existing_data.append(new_cookie_entry)
-            
-            # 📁 JSON ফাইলে সেভ করা
-            with open(JSON_FILE, "w", encoding="utf-8") as f:
-                json.dump(existing_data, f, indent=4, ensure_ascii=False)
+            # 📁 Local backup
+            with open("cookie.json", "w", encoding="utf-8") as f:
+                f.write(json_text)
 
-            # 📤 Telegram এ মেসেজ পাঠানো
-            telegram_display_json = json.dumps(new_cookie_entry, indent=2, ensure_ascii=False)
+            # 📤 Telegram এ body text হিসেবে পাঠানো
             msg = (
                 f"✅ <b>Cookie Fetched Successfully</b>\n"
-                f"🆔 <b>Serial ID:</b> {next_id}\n"
-                f"🍪 Total Cookies: {len(raw_cookies)}\n\n"
-                f"<pre>{telegram_display_json}</pre>"
+                f"🍪 Total: {len(cookie_json)} keys\n\n"
+                f"<pre>{json_text}</pre>"
             )
             send_telegram_message(msg)
 
-            print(f"কাজ শেষ! ডেটা {JSON_FILE} এ ID: {next_id} হিসেবে সেভ হয়েছে।")
+            print("কাজ শেষ! ব্রাউজার বন্ধ করা হচ্ছে...")
             await browser.close()
 
     except Exception as e:
