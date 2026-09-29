@@ -12,7 +12,7 @@ on:
         required: false
         default: '1'
 
-# 🟢 গিটহাবে ফাইল সেভ (Push) করার জন্য এই পারমিশনটি অবশ্যই লাগবে
+# গিটহাবে ফাইল সেভ (Push) করার জন্য পারমিশন
 permissions:
   contents: write
 
@@ -49,13 +49,12 @@ jobs:
           TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
         run: python fetch_cookie.py
 
-      # 🟢 নতুন স্টেপ: জেনারেট হওয়া ফাইলটি রিপোজিটরিতে সেভ করার জন্য
       - name: Commit and Push cookie file
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add cookie.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update cookie.json" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update cookie.json" && git pull --rebase origin main && git push)
 
       - name: Chain next job
         if: always()
