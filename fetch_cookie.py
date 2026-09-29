@@ -4,6 +4,11 @@ import requests
 import os
 from playwright.async_api import async_playwright
 
+# আপনার User-Agent (UA) ভেরিয়েবল
+UA = ("Mozilla/5.0 (Linux; Android 16; V2446 Build/BP2A.250605.031.A3; wv) "
+      "AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 "
+      "Chrome/127.0.6533.144 Mobile Safari/537.36")
+
 # আপনার টেলিগ্রাম বটের তথ্য
 BOT_TOKEN = "8450441691:AAHrKs10fFE8TsO_7Okrjj8pn9_acanOEnc"
 CHAT_ID = "-1004322570598"
@@ -11,7 +16,7 @@ CHAT_ID = "-1004322570598"
 # টার্গেট এবং API এন্ডপয়েন্ট
 TARGET_URL = "https://shop.garena.my/?channel=202953"
 API_ENDPOINT = "https://shop.garena.my/api/preflight"
-JSON_FILE = "cookie.json"
+JSON_FILE = "cooxkie.json"
 
 
 def send_telegram_message(message):
@@ -58,8 +63,9 @@ async def fetch_all_data():
                 ]
             )
 
+            # এখানে আপনার দেওয়া UA ভেরিয়েবলটি ব্যবহার করা হয়েছে
             context = await browser.new_context(
-                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+                user_agent=UA
             )
 
             page = await context.new_page()
