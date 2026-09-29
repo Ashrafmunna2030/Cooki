@@ -2,7 +2,6 @@ import asyncio
 import json
 import requests
 import os
-from datetime import datetime
 from playwright.async_api import async_playwright
 
 # আপনার টেলিগ্রাম বটের তথ্য
@@ -32,25 +31,15 @@ def send_telegram_message(message):
         print(f"Telegram alert error: {e}")
 
 
-def format_all_cookies(raw_cookies, current_id):
+def format_simple_cookies(raw_cookies, current_id):
     """
-    Playwright থেকে পাওয়া সব কুকি (A to Z) একটি প্রিমিয়াম JSON স্ট্রাকচারে সাজাবে।
-    সাথে সিরিয়াল ID থাকবে।
+    শুধুমাত্র ID এবং কুকির Key:Value গুলো সেভ করবে।
     """
-    cookie_dict = {c["name"]: c["value"] for c in raw_cookies}
-
-    result = {
-        "id": current_id,
-        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "metadata": {
-            "source": "pc",
-            "region": "MY",
-            "language": "en",
-            "total_cookies": len(raw_cookies)
-        },
-        "cookies_dict": cookie_dict,        
-        "cookies_raw_array": raw_cookies    
-    }
+    result = {"id": current_id}
+    
+    # সব কুকি যুক্ত করা হচ্ছে
+    for c in raw_cookies:
+        result[c["name"]] = c["value"]
 
     return result
 
@@ -97,7 +86,7 @@ async def fetch_all_data():
             print("সব কুকি এক্সট্র্যাক্ট করা হচ্ছে...")
             raw_cookies = await context.cookies()
 
-            # 🎯 সিরিয়াল আইডি (1, 2, 3...) বের করা এবং পুরানো ডেটা লোড করার লজিক
+            # 🎯 সিরিয়াল আইডি (1, 2, 3...) বের করা
             existing_data = []
             next_id = 1
             
@@ -107,10 +96,8 @@ async def fetch_all_data():
                         content = f.read().strip()
                         if content:
                             existing_data = json.loads(content)
-                            # যদি ডেটা লিস্ট আকারে থাকে (একাধিক সেভ করা ডেটা)
                             if isinstance(existing_data, list) and len(existing_data) > 0:
                                 next_id = existing_data[-1].get("id", 0) + 1
-                            # যদি পুরানো ডেটা ডিকশনারি আকারে থাকে (আগের কোডের কারণে)
                             elif isinstance(existing_data, dict):
                                 next_id = existing_data.get("id", 0) + 1
                                 existing_data = [existing_data] 
@@ -118,16 +105,16 @@ async def fetch_all_data():
                     print("পুরানো JSON ফাইলে সমস্যা, নতুন করে তৈরি করা হচ্ছে...")
                     existing_data = []
 
-            # 🎯 A to Z কুকি নিয়ে প্রিমিয়াম JSON বানানো (নতুন ID সহ)
-            new_cookie_entry = format_all_cookies(raw_cookies, next_id)
+            # 🎯 সিম্পল JSON বানানো
+            new_cookie_entry = format_simple_cookies(raw_cookies, next_id)
             existing_data.append(new_cookie_entry)
             
-            # 📁 JSON ফাইলে সেভ করা (পুরানো + নতুন ডেটা)
+            # 📁 JSON ফাইলে সেভ করা
             with open(JSON_FILE, "w", encoding="utf-8") as f:
                 json.dump(existing_data, f, indent=4, ensure_ascii=False)
 
             # 📤 Telegram এ মেসেজ পাঠানো
-            telegram_display_json = json.dumps(new_cookie_entry["cookies_dict"], indent=2, ensure_ascii=False)
+            telegram_display_json = json.dumps(new_cookie_entry, indent=2, ensure_ascii=False)
             msg = (
                 f"✅ <b>Cookie Fetched Successfully</b>\n"
                 f"🆔 <b>Serial ID:</b> {next_id}\n"
@@ -136,7 +123,7 @@ async def fetch_all_data():
             )
             send_telegram_message(msg)
 
-            print(f"কাজ শেষ! ডেটা {JSON_FILE} এ ID: {next_id} হিসেবে সেভ হয়েছে। ব্রাউজার বন্ধ করা হচ্ছে...")
+            print(f"কাজ শেষ! ডেটা {JSON_FILE} এ ID: {next_id} হিসেবে সেভ হয়েছে।")
             await browser.close()
 
     except Exception as e:
