@@ -1,12 +1,138 @@
-{
-  "source": "pc",
-  "region": "MY",
-  "language": "en",
-  "mspid2": "1663dbfd21644defa9a7fe1fc210b80a",
-  "_fbp": "fb.1.1790512221884.327105087618695327",
-  "fr": "09tu7QWDlRWB5snYm..BquQxd...1.0.BquQxd.AWct96CYIwwy6jRi-6pb91LvwDM",
-  "_ga": "GA1.1.1427102406.1790512222",
-  "datadome": "ShcQRQ~kbR0EF1VY1CE7p7l5BSLTxJcjEIh_JBiprFQI22_1eOnHQ7kF6ROQlO_bQI_vIIIaxCkoJcQuJHxmM643iuzJ9wgprvMo5zzaegQKTacDUnUY1mIvhJFDKQcM",
-  "_ga_9F1KGGRJHY": "GS2.1.s1790512221$o1$g0$t1790512222$j59$l0$h0",
-  "__csrf__": "jaNsEqktr55ziKt17EYSE5flkK2QnhKC"
-}
+[
+    {
+        "source": "pc",
+        "region": "MY",
+        "language": "en",
+        "mspid2": "1663dbfd21644defa9a7fe1fc210b80a",
+        "_fbp": "fb.1.1790512221884.327105087618695327",
+        "fr": "09tu7QWDlRWB5snYm..BquQxd...1.0.BquQxd.AWct96CYIwwy6jRi-6pb91LvwDM",
+        "_ga": "GA1.1.1427102406.1790512222",
+        "datadome": "ShcQRQ~kbR0EF1VY1CE7p7l5BSLTxJcjEIh_JBiprFQI22_1eOnHQ7kF6ROQlO_bQI_vIIIaxCkoJcQuJHxmM643iuzJ9wgprvMo5zzaegQKTacDUnUY1mIvhJFDKQcM",
+        "_ga_9F1KGGRJHY": "GS2.1.s1790512221$o1$g0$t1790512222$j59$l0$h0",
+        "__csrf__": "jaNsEqktr55ziKt17EYSE5flkK2QnhKC"
+    },
+    {
+        "id": 1,
+        "timestamp": "2026-09-29 05:18:00",
+        "metadata": {
+            "source": "pc",
+            "region": "MY",
+            "language": "en",
+            "total_cookies": 10
+        },
+        "cookies_dict": {
+            "source": "pc",
+            "region": "MY",
+            "language": "en",
+            "mspid2": "1cc2eb3d8298a35d8f968c51e503475f",
+            "datadome": "PzG5kCKbe6_E58yeecUrfJhz2A2uyRpH3uZF1MZ4OeduxsvYDBrhjmjfys8U77iHBXDdyoRXfCy6yy7jEEvoVwkFWqfcEfLrX9jEl8oV64dFK6UkRiCMYo5fOG8z1kX3",
+            "_ga": "GA1.1.1753358104.1790659069",
+            "_fbp": "fb.1.1790659069326.20713285744898418",
+            "fr": "0aomnRZ4bUgklGbfs..Bqu0n9...1.0.Bqu0n9.AWeLVEXSCkw7AVeBWW55q7FWS-g",
+            "_ga_9F1KGGRJHY": "GS2.1.s1790659069$o1$g0$t1790659069$j60$l0$h0",
+            "__csrf__": "21JgOQynfJVdOC5l4HpjdQxY758uRM9Y"
+        },
+        "cookies_raw_array": [
+            {
+                "name": "source",
+                "value": "pc",
+                "domain": "shop.garena.my",
+                "path": "/",
+                "expires": -1,
+                "httpOnly": false,
+                "secure": true,
+                "sameSite": "None"
+            },
+            {
+                "name": "region",
+                "value": "MY",
+                "domain": "shop.garena.my",
+                "path": "/",
+                "expires": 1822195069.488407,
+                "httpOnly": false,
+                "secure": true,
+                "sameSite": "None"
+            },
+            {
+                "name": "language",
+                "value": "en",
+                "domain": "shop.garena.my",
+                "path": "/",
+                "expires": 1822195069.488349,
+                "httpOnly": false,
+                "secure": true,
+                "sameSite": "None"
+            },
+            {
+                "name": "mspid2",
+                "value": "1cc2eb3d8298a35d8f968c51e503475f",
+                "domain": "shop.garena.my",
+                "path": "/",
+                "expires": 1822195068.949975,
+                "httpOnly": false,
+                "secure": true,
+                "sameSite": "None"
+            },
+            {
+                "name": "datadome",
+                "value": "PzG5kCKbe6_E58yeecUrfJhz2A2uyRpH3uZF1MZ4OeduxsvYDBrhjmjfys8U77iHBXDdyoRXfCy6yy7jEEvoVwkFWqfcEfLrX9jEl8oV64dFK6UkRiCMYo5fOG8z1kX3",
+                "domain": ".garena.my",
+                "path": "/",
+                "expires": 1822195069.189189,
+                "httpOnly": false,
+                "secure": true,
+                "sameSite": "Lax"
+            },
+            {
+                "name": "_ga",
+                "value": "GA1.1.1753358104.1790659069",
+                "domain": ".garena.my",
+                "path": "/",
+                "expires": 1825219069.276995,
+                "httpOnly": false,
+                "secure": false,
+                "sameSite": "Lax"
+            },
+            {
+                "name": "_fbp",
+                "value": "fb.1.1790659069326.20713285744898418",
+                "domain": ".garena.my",
+                "path": "/",
+                "expires": 1798435069,
+                "httpOnly": false,
+                "secure": false,
+                "sameSite": "Lax"
+            },
+            {
+                "name": "fr",
+                "value": "0aomnRZ4bUgklGbfs..Bqu0n9...1.0.Bqu0n9.AWeLVEXSCkw7AVeBWW55q7FWS-g",
+                "domain": ".facebook.com",
+                "path": "/",
+                "expires": 1798435069.369171,
+                "httpOnly": true,
+                "secure": true,
+                "sameSite": "None"
+            },
+            {
+                "name": "_ga_9F1KGGRJHY",
+                "value": "GS2.1.s1790659069$o1$g0$t1790659069$j60$l0$h0",
+                "domain": ".garena.my",
+                "path": "/",
+                "expires": 1825219069.574688,
+                "httpOnly": false,
+                "secure": false,
+                "sameSite": "Lax"
+            },
+            {
+                "name": "__csrf__",
+                "value": "21JgOQynfJVdOC5l4HpjdQxY758uRM9Y",
+                "domain": "shop.garena.my",
+                "path": "/",
+                "expires": -1,
+                "httpOnly": false,
+                "secure": true,
+                "sameSite": "Lax"
+            }
+        ]
+    }
+]
