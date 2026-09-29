@@ -122,5 +122,129 @@
                 "sameSite": "Lax"
             }
         ]
+    },
+    {
+        "id": 2,
+        "timestamp": "2026-09-29 05:24:44",
+        "metadata": {
+            "source": "pc",
+            "region": "MY",
+            "language": "en",
+            "total_cookies": 10
+        },
+        "cookies_dict": {
+            "source": "pc",
+            "region": "MY",
+            "language": "en",
+            "mspid2": "0aa449a2c2b3b4aebf08557d4b0991d8",
+            "_fbp": "fb.1.1790659473735.285767977396475203",
+            "fr": "0WDxeWxgQAVm9bEEj..Bqu0uR...1.0.Bqu0uR.AWfEsPGM8a-cZuOYadfEhJEunFg",
+            "_ga": "GA1.1.536225368.1790659474",
+            "datadome": "05x73oxlIDsyQFfa9TNiE5HwCCL~DhWfQ_sNY~QRcwV3T_fX2Cz9FprGm2pudhgX5HPY_1MUq2itV5SIGZq84IWII569pHU7GKnLRQTno0tixS63IzN3ml7qEXmyzceM",
+            "_ga_9F1KGGRJHY": "GS2.1.s1790659473$o1$g0$t1790659474$j59$l0$h0",
+            "__csrf__": "U2O2p1qdPQpy5h0MeavCmPsqST7g5RMm"
+        },
+        "cookies_raw_array": [
+            {
+                "name": "source",
+                "value": "pc",
+                "domain": "shop.garena.my",
+                "path": "/",
+                "expires": -1,
+                "httpOnly": false,
+                "secure": true,
+                "sameSite": "None"
+            },
+            {
+                "name": "region",
+                "value": "MY",
+                "domain": "shop.garena.my",
+                "path": "/",
+                "expires": 1822195474.37247,
+                "httpOnly": false,
+                "secure": true,
+                "sameSite": "None"
+            },
+            {
+                "name": "language",
+                "value": "en",
+                "domain": "shop.garena.my",
+                "path": "/",
+                "expires": 1822195474.372359,
+                "httpOnly": false,
+                "secure": true,
+                "sameSite": "None"
+            },
+            {
+                "name": "mspid2",
+                "value": "0aa449a2c2b3b4aebf08557d4b0991d8",
+                "domain": "shop.garena.my",
+                "path": "/",
+                "expires": 1822195473.507903,
+                "httpOnly": false,
+                "secure": true,
+                "sameSite": "None"
+            },
+            {
+                "name": "_fbp",
+                "value": "fb.1.1790659473735.285767977396475203",
+                "domain": ".garena.my",
+                "path": "/",
+                "expires": 1798435474,
+                "httpOnly": false,
+                "secure": false,
+                "sameSite": "Lax"
+            },
+            {
+                "name": "fr",
+                "value": "0WDxeWxgQAVm9bEEj..Bqu0uR...1.0.Bqu0uR.AWfEsPGM8a-cZuOYadfEhJEunFg",
+                "domain": ".facebook.com",
+                "path": "/",
+                "expires": 1798435473.784515,
+                "httpOnly": true,
+                "secure": true,
+                "sameSite": "None"
+            },
+            {
+                "name": "_ga",
+                "value": "GA1.1.536225368.1790659474",
+                "domain": ".garena.my",
+                "path": "/",
+                "expires": 1825219473.861018,
+                "httpOnly": false,
+                "secure": false,
+                "sameSite": "Lax"
+            },
+            {
+                "name": "datadome",
+                "value": "05x73oxlIDsyQFfa9TNiE5HwCCL~DhWfQ_sNY~QRcwV3T_fX2Cz9FprGm2pudhgX5HPY_1MUq2itV5SIGZq84IWII569pHU7GKnLRQTno0tixS63IzN3ml7qEXmyzceM",
+                "domain": ".garena.my",
+                "path": "/",
+                "expires": 1822195473.927986,
+                "httpOnly": false,
+                "secure": true,
+                "sameSite": "Lax"
+            },
+            {
+                "name": "_ga_9F1KGGRJHY",
+                "value": "GS2.1.s1790659473$o1$g0$t1790659474$j59$l0$h0",
+                "domain": ".garena.my",
+                "path": "/",
+                "expires": 1825219474.298467,
+                "httpOnly": false,
+                "secure": false,
+                "sameSite": "Lax"
+            },
+            {
+                "name": "__csrf__",
+                "value": "U2O2p1qdPQpy5h0MeavCmPsqST7g5RMm",
+                "domain": "shop.garena.my",
+                "path": "/",
+                "expires": -1,
+                "httpOnly": false,
+                "secure": true,
+                "sameSite": "Lax"
+            }
+        ]
     }
 ]
