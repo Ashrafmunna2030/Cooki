@@ -11,13 +11,12 @@ CHAT_ID = "-1004322570598"
 # টার্গেট এবং API এন্ডপয়েন্ট
 TARGET_URL = "https://shop.garena.my/?channel=202953"
 API_ENDPOINT = "https://shop.garena.my/api/preflight"
-JSON_FILE = "cookie.json"
 
 # 🎯 যে cookie গুলো JSON এ চাই
 WANTED_KEYS = [
     "source", "region", "language",
-    "mspid2", "datadome", "_ga", "_fbp",
-    "fr", "_ga_9F1KGGRJHY", "__csrf__"
+    "mspid2", "_fbp", "fr", "_ga",
+    "datadome", "_ga_9F1KGGRJHY", "__csrf__"
 ]
 
 
@@ -38,14 +37,13 @@ def send_telegram_message(message):
         print(f"Telegram alert error: {e}")
 
 
-def build_cookie_json(raw_cookies, current_id):
+def build_cookie_json(raw_cookies):
     """
-    Playwright cookies array → নির্দিষ্ট ফরম্যাট ও ID সহ dict তৈরি
+    Playwright cookies array → চাওয়া ফরম্যাটের clean dict
     """
     cookie_map = {c["name"]: c["value"] for c in raw_cookies}
 
     result = {
-        "id": current_id,
         "source": "pc",
         "region": "MY",
         "language": "en",
@@ -102,45 +100,23 @@ async def fetch_all_data():
             print("কুকি এক্সট্র্যাক্ট করা হচ্ছে...")
             raw_cookies = await context.cookies()
 
-            # 🎯 সিরিয়াল আইডি (1, 2, 3...) নির্ধারণ ও পুরানো ফাইল হ্যান্ডলিং
-            existing_data = []
-            next_id = 1
+            # 🎯 clean JSON বানানো
+            cookie_json = build_cookie_json(raw_cookies)
+            json_text = json.dumps(cookie_json, indent=2, ensure_ascii=False)
 
-            if os.path.exists(JSON_FILE):
-                try:
-                    with open(JSON_FILE, "r", encoding="utf-8") as f:
-                        content = f.read().strip()
-                        if content:
-                            loaded = json.loads(content)
-                            if isinstance(loaded, list) and len(loaded) > 0:
-                                existing_data = loaded
-                                next_id = existing_data[-1].get("id", 0) + 1
-                            elif isinstance(loaded, dict):
-                                existing_data = [loaded]
-                                next_id = loaded.get("id", 0) + 1
-                except Exception as e:
-                    print(f"পুরানো JSON পড়তে সমস্যা: {e}, নতুন তালিকা শুরু হচ্ছে...")
-                    existing_data = []
+            # 📁 Local backup
+            with open("cookie.json", "w", encoding="utf-8") as f:
+                f.write(json_text)
 
-            # 🎯 ID সহ নতুন কুকি অবজেক্ট তৈরি
-            new_cookie_entry = build_cookie_json(raw_cookies, next_id)
-            existing_data.append(new_cookie_entry)
-
-            # 📁 cookie.json এ লিস্ট আকারে সংরক্ষণ
-            with open(JSON_FILE, "w", encoding="utf-8") as f:
-                json.dump(existing_data, f, indent=4, ensure_ascii=False)
-
-            # 📤 Telegram এ নতুন যোগ হওয়া কুকি পাঠানো
-            telegram_display = json.dumps(new_cookie_entry, indent=2, ensure_ascii=False)
+            # 📤 Telegram এ body text হিসেবে পাঠানো
             msg = (
                 f"✅ <b>Cookie Fetched Successfully</b>\n"
-                f"🆔 <b>Serial ID:</b> {next_id}\n"
-                f"🍪 Total In Pool: {len(existing_data)}\n\n"
-                f"<pre>{telegram_display}</pre>"
+                f"🍪 Total: {len(cookie_json)} keys\n\n"
+                f"<pre>{json_text}</pre>"
             )
             send_telegram_message(msg)
 
-            print(f"কাজ শেষ! নতুন কুকি ID: {next_id} হিসেবে {JSON_FILE} এ সেভ হয়েছে।")
+            print("কাজ শেষ! ব্রাউজার বন্ধ করা হচ্ছে...")
             await browser.close()
 
     except Exception as e:
