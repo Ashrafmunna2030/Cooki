@@ -1,18 +1,46 @@
+#!/usr/bin/env python3
+# ============================================================================
+# ⚡ GARENA COOKIE FETCHER (Playwright · Mobile UA · No Preset Cookies) ⚡
+# Fetches fresh cookies from shop.garena.my and sends to Telegram
+# ============================================================================
+
 import asyncio
 import json
 import requests
 import os
 from playwright.async_api import async_playwright
 
-# আপনার টেলিগ্রাম বটের তথ্য
+# ============================================================================
+# TELEGRAM CONFIG
+# ============================================================================
 BOT_TOKEN = "8450441691:AAHrKs10fFE8TsO_7Okrjj8pn9_acanOEnc"
-CHAT_ID = "-1004322570598"
+CHAT_ID   = "-1004322570598"
 
-# টার্গেট এবং API এন্ডপয়েন্ট
-TARGET_URL = "https://shop.garena.my/?channel=202953"
+# ============================================================================
+# TARGET
+# ============================================================================
+TARGET_URL   = "https://shop.garena.my/?channel=202953"
 API_ENDPOINT = "https://shop.garena.my/api/preflight"
 
-# 🎯 যে cookie গুলো JSON এ চাই
+# ============================================================================
+# ✅ MOBILE UA — Android WebView (A to Z)
+# ============================================================================
+UA = "Mozilla/5.0 (Linux; Android 12; M2101K7AI Build/SKQ1.210908.001) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.8010.36 Mobile Safari/537.36"
+
+# ============================================================================
+# ✅ MOBILE BASE HEADERS — applied globally to every request
+# ============================================================================
+BASE_HEADERS = {
+    "sec-ch-ua-platform": '"Android"',
+    "sec-ch-ua": '"Android WebView";v="153", "Not_A Brand";v="8", "Chromium";v="153"',
+    "sec-ch-ua-mobile": "?1",
+    "X-Requested-With": "mark.via.gp",
+    "Accept-Language": "en-GB,en-US;q=0.9,en;q=0.8",
+}
+
+# ============================================================================
+# 🎯 Wanted cookie keys (output JSON format)
+# ============================================================================
 WANTED_KEYS = [
     "source", "region", "language",
     "mspid2", "_fbp", "fr", "_ga",
@@ -20,6 +48,9 @@ WANTED_KEYS = [
 ]
 
 
+# ============================================================================
+# TELEGRAM SENDER
+# ============================================================================
 def send_telegram_message(message):
     try:
         url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
@@ -37,15 +68,18 @@ def send_telegram_message(message):
         print(f"Telegram alert error: {e}")
 
 
+# ============================================================================
+# BUILD CLEAN COOKIE JSON
+# ============================================================================
 def build_cookie_json(raw_cookies):
     """
-    Playwright cookies array → চাওয়া ফরম্যাটের clean dict
+    Playwright cookies array → clean dict (exactly the format the engine needs)
     """
     cookie_map = {c["name"]: c["value"] for c in raw_cookies}
 
     result = {
-        "source": "pc",
-        "region": "MY",
+        "source":   "pc",
+        "region":   "MY",
         "language": "en",
     }
 
@@ -58,49 +92,73 @@ def build_cookie_json(raw_cookies):
     return result
 
 
+# ============================================================================
+# MAIN — Playwright + Mobile UA + Mobile Headers
+# ============================================================================
 async def fetch_all_data():
     try:
         async with async_playwright() as p:
-            print("ব্রাউজার লঞ্চ করা হচ্ছে...")
+            print("🚀 Launching browser (Mobile UA)...")
+
             browser = await p.chromium.launch(
                 headless=True,
                 args=[
                     "--disable-blink-features=AutomationControlled",
                     "--disable-infobars",
                     "--no-sandbox",
-                    "--disable-dev-shm-usage"
+                    "--disable-dev-shm-usage",
+                    "--disable-gpu",
+                    "--no-first-run",
+                    "--no-default-browser-check",
                 ]
             )
 
+            # ✅ Fresh context — NO preset cookies (fresh session jar)
             context = await browser.new_context(
-                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+                user_agent=UA,
+                viewport={"width": 412, "height": 915},           # Android mobile viewport
+                device_scale_factor=2.625,
+                is_mobile=True,
+                has_touch=True,
+                locale="en-GB",
+                timezone_id="Asia/Yangon",
+                extra_http_headers=BASE_HEADERS,                  # ✅ Mobile headers globally
             )
 
+            # ✅ NO preset cookies — fresh jar
             page = await context.new_page()
 
-            print(f"{TARGET_URL} এ ভিজিট করা হচ্ছে (সেশন তৈরি করার জন্য)...")
+            print(f"🌐 Visiting {TARGET_URL} (to generate session)...")
             await page.goto(TARGET_URL, wait_until="domcontentloaded", timeout=60000)
             await page.wait_for_timeout(10000)
 
-            print("Playwright-এর মাধ্যমে সরাসরি API তে POST কল করা হচ্ছে...")
-            api_response = await page.request.post(
-                API_ENDPOINT,
-                headers={
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
-                    "Referer": TARGET_URL
-                }
-            )
+            # ================================================================
+            # Trigger preflight API (like real browser)
+            # ================================================================
+            print("📡 Calling /api/preflight via browser context...")
+            try:
+                api_response = await page.request.post(
+                    API_ENDPOINT,
+                    headers={
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                        "Referer": TARGET_URL,
+                        "Origin": "https://shop.garena.my",
+                    }
+                )
+                if api_response.ok:
+                    print("✅ API response OK")
+                else:
+                    print(f"⚠️ API Error: status {api_response.status}")
+            except Exception as e:
+                print(f"⚠️ Preflight failed: {e}")
 
-            if api_response.ok:
-                print("✅ API রেসপন্স সফল!")
-            else:
-                print(f"⚠️ API Error: স্ট্যাটাস {api_response.status}")
-
-            print("কুকি এক্সট্র্যাক্ট করা হচ্ছে...")
+            # ================================================================
+            # Extract cookies
+            # ================================================================
+            print("🍪 Extracting cookies...")
             raw_cookies = await context.cookies()
 
-            # 🎯 clean JSON বানানো
             cookie_json = build_cookie_json(raw_cookies)
             json_text = json.dumps(cookie_json, indent=2, ensure_ascii=False)
 
@@ -108,22 +166,36 @@ async def fetch_all_data():
             with open("cookie.json", "w", encoding="utf-8") as f:
                 f.write(json_text)
 
-            # 📤 Telegram এ body text হিসেবে পাঠানো
+            print(f"✅ Cookies fetched: {len(cookie_json)} keys")
+
+            # 📤 Send to Telegram
             msg = (
                 f"✅ <b>Cookie Fetched Successfully</b>\n"
+                f"🤖 Mobile UA · Fresh Session\n"
                 f"🍪 Total: {len(cookie_json)} keys\n\n"
                 f"<pre>{json_text}</pre>"
             )
             send_telegram_message(msg)
 
-            print("কাজ শেষ! ব্রাউজার বন্ধ করা হচ্ছে...")
+            print("🔒 Closing browser...")
             await browser.close()
 
+            return cookie_json
+
     except Exception as e:
-        error_msg = f"❌ <b>স্ক্রিপ্ট রান করতে সমস্যা:</b>\n<code>{str(e)}</code>"
+        error_msg = f"❌ <b>Script Error:</b>\n<code>{str(e)}</code>"
         print(error_msg)
         send_telegram_message(error_msg)
+        return None
 
 
+# ============================================================================
+# ENTRY POINT
+# ============================================================================
 if __name__ == "__main__":
-    asyncio.run(fetch_all_data())
+    result = asyncio.run(fetch_all_data())
+    if result:
+        print("\n" + "=" * 70)
+        print("COOKIE JSON:")
+        print("=" * 70)
+        print(json.dumps(result, indent=2, ensure_ascii=False))
