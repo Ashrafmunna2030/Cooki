@@ -1,22 +1,12 @@
-[
-    {
-        "source": "pc",
-        "region": "MY",
-        "language": "en",
-        "mspid2": "7c4efe1fe8429027c64da2e60e20f440",
-        "_fbp": "fb.1.1790952504376.121289515736935674",
-        "fr": "03Icmjx5Y2XoxxSOb..Bqv8Q4...1.0.Bqv8Q4.AWfm6czP8WCABBG-nWT2Rp-xlLA",
-        "_ga": "GA1.1.113390742.1790952505",
-        "datadome": "qcNZkquAAr_hnj2WAwDR7w1AKcpgW6bYaTwtCtA5aNMbocaqobz7CjKdOYuiLYOK_cltZMAjw90SKk0SBaBo_mfk7rIyv03zz1_SsOmRX42x3t4rPLJF4cMftp5YEZZR",
-        "_ga_9F1KGGRJHY": "GS2.1.s1790952504$o1$g0$t1790952504$j60$l0$h0",
-        "__csrf__": "Z0IpZM16O8cggAJWFEK5btwNLqYCh6bD"
-    },
-    {
-        "id": 1,
-        "source": "pc",
-        "region": "MY",
-        "language": "en",
-        "mspid2": "cd1d782c0413b8b1e3a17408c7e38574",
-        "__csrf__": "WIcUXXuBOlKU7TQtCjdPVC1TYhe99n0A"
-    }
-]
+{
+  "source": "pc",
+  "region": "MY",
+  "language": "en",
+  "mspid2": "19376142c2b4ab2a11297a4b69f00469",
+  "_fbp": "fb.1.1791029165693.538034010765064964",
+  "fr": "0lteNkthOIeslqBMJ..BqwO-t...1.0.BqwO-t.AWcAqtR7ZJKRBhfCWudTtS8JVp8",
+  "_ga": "GA1.1.1787087390.1791029166",
+  "datadome": "wdq5FT5RiQK2x9qQ0awH9MdnQSxELxPaIDyb13mZxgJeEWKmEkJUTZFiGSSDG1sCUC_V0CTc7vZ5E1LXoqPQq0J6c01RFrNsqxWPYV8F7~O3Uf1NOyHhqi11ykFOVkpd",
+  "_ga_9F1KGGRJHY": "GS2.1.s1791029165$o1$g0$t1791029167$j58$l0$h0",
+  "__csrf__": "OSQUbiykMNFAtjNx68PY9DK5pBk6h9zD"
+}
