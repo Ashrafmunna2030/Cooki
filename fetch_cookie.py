@@ -70,7 +70,7 @@ async def fetch_all_data():
         async with async_playwright() as p:
             print("ব্রাউজার লঞ্চ করা হচ্ছে (Headless=False)...")
             browser = await p.chromium.launch(
-                headless=False,  # টেস্ট পর্যবেক্ষণ ও প্রোপার রেন্ডারিংয়ের জন্য দৃশ্যমান রাখা হয়েছে
+                headless=True,  # টেস্ট পর্যবেক্ষণ ও প্রোপার রেন্ডারিংয়ের জন্য দৃশ্যমান রাখা হয়েছে
                 args=[
                     "--disable-blink-features=AutomationControlled",
                     "--disable-infobars",
